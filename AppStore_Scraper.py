@@ -67,7 +67,6 @@ def web_scrapper(apps):
 if __name__ == "__main__":
     print("Inicia proceso de Scrapper de la AppStore")
     # Define el diccionario que tiene como key: 'Nombre de la APP' y como value: 'URL de la AppStore'. Ejemplo: 'GoCoEdit - Code & Text Editor': 'https://apps.apple.com/es/app/gocoedit-code-text-editor/id869346854?mt=8&ign-mpt=uo%3D4'
-    apps = {
-    }
+    apps = {}
     # Ejecuta la funcion para hacer el webscrapping de la AppStore
     web_scrapper(apps)

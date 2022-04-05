@@ -5,4 +5,5 @@ AppStore_Scraper es un script desarrollado en Python para ayudar a usuarios de d
 
 ### Estructura del código
 > *Dentro del código se puede encontrar comentarios para cada línea o proceso que es importante mencionar su utilidad.*
+
 El script consta de una única función llamada `web_scrapper` que se encarga de recorrer el diccionario que contiene los nombres y URLs de las Apps (*apps*), se conecta a la URL para extraer la información de pago y finalmente imprime los nombres de las Apps que son de pago, las que son gratuitas y las que dieron error de conexión.

@@ -5,17 +5,16 @@ from bs4 import BeautifulSoup
 
 
 # Funcion para hacer el webscrapping de la AppStore
-def web_scrapper(apps):
+def web_scrapper(apps_dict):
     # Define las variables iniciales del webscrapping
     status_nok = list()         # Lista para las APPs que devuelva la web error 404
     app_ok = dict()             # Diccionario para las APPs de pago
     app_free = list()           # Lista para las APPs que estan gratis
-    num = len(apps)             # Longitud del diccionario que tiene las APPs y sus URLs
-    print("\nTotal de APPS a buscar: {}\n".format(num))
+    num = len(apps_dict)             # Longitud del diccionario que tiene las APPs y sus URLs
+    print(f"\nTotal de APPS a buscar: {num}\n")
 
-    # Verifica si el diccionario de las APPs y sus URLs tiene datos
-    if apps:
-        for app, web in apps.items():       # Recorre el diccionario de las APPs y sus URLs
+    try:
+        for app, web in apps_dict.items():       # Recorre el diccionario de las APPs y sus URLs
             try:
                 price = str()
                 while True:
@@ -45,28 +44,30 @@ def web_scrapper(apps):
                     app_free.append(app)
                     price = "Gratis"
 
-                print("{0}. - Precio de {1}: {2}".format(num, app, price))
+                print(f"{num}. - Precio de {app}: {price}")
                 num -= 1
 
                 # Si el precio es vacio o no registra un valor, imprime el nombre de la APP que ha fallado y finaliza el proceso
                 if price == "":
-                    print("**************************************")
-                    print("Fallo en la app {}".format(app))
+                    print(f"**************************************\nFallo en la app {app}")
                     sys.exit()
             except Exception as error:
-                print("Ha fallado el proceso de obtener precios: {}".format(error))
+                print(f"Ha fallado el proceso de obtener precios: {error}")
 
         # Imprime el diccionario de APPs de pago, la lista de APPs gratis y la lista de APPs que fallaron
-        print("\nAplicaciones de pago ({0}):\n{1}\n".format(len(app_ok), app_ok))
-        print("Aplicaciones GRATIS ({0}):\n{1}\n".format(len(app_free), app_free))
-        print("Aplicaciones que fallaron ({0}):\n{1}\n".format(len(status_nok), status_nok))
-    else:
-        print("No hay ninguna app para buscar")
+        print(f"\nAplicaciones de pago ({len(app_ok)}):\n{app_ok}\n")
+        print(f"Aplicaciones GRATIS ({len(app_free)}):\n{app_free}\n")
+        print(f"Aplicaciones que fallaron ({len(status_nok)}):\n{status_nok}\n")
+    except Exception as error:
+        print(f"Error Exception: {error}")
 
 
 if __name__ == "__main__":
     print("Inicia proceso de Scrapper de la AppStore")
     # Define el diccionario que tiene como key: 'Nombre de la APP' y como value: 'URL de la AppStore'. Ejemplo: 'GoCoEdit - Code & Text Editor': 'https://apps.apple.com/es/app/gocoedit-code-text-editor/id869346854?mt=8&ign-mpt=uo%3D4'
-    apps = {}
+    apps_dict = {}
     # Ejecuta la funcion para hacer el webscrapping de la AppStore
-    web_scrapper(apps)
+    if apps_dict:
+        web_scrapper(apps_dict)
+    else:
+        print("No hay ninguna app para buscar")

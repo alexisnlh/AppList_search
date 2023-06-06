@@ -2,6 +2,7 @@ import sys
 import re
 import requests
 from bs4 import BeautifulSoup
+from info_apps import apps_dict
 
 
 # Funcion para hacer el webscrapping de la AppStore
@@ -24,8 +25,8 @@ def web_scrapper(apps_dict):
                         continue
 
                     soup = BeautifulSoup(page.text, 'html.parser')      # Parsea el HTML de la pagina web de la APP a consultar
-                    result_pay = soup.find_all('dd', text=re.compile("€"), attrs={"class": "information-list__item__definition"})           # Busca en el HTML los parametros indicados para las APPs de pago. OJO: Cambiar el '€' por el simbolo de la moneda para la tienda seleccionada
-                    result_free = soup.find_all('dd', text=re.compile("Gratis"), attrs={"class": "information-list__item__definition"})     # Busca en el HTML los parametros indicados para las APPs gratis. OJO: Cambiar el 'Gratis' por el valor correspondiente para la tienda seleccionada
+                    result_pay = soup.find_all('dd', string=re.compile("€"), attrs={"class": "information-list__item__definition"})           # Busca en el HTML los parametros indicados para las APPs de pago. OJO: Cambiar el '€' por el simbolo de la moneda para la tienda seleccionada
+                    result_free = soup.find_all('dd', string=re.compile("Gratis"), attrs={"class": "information-list__item__definition"})     # Busca en el HTML los parametros indicados para las APPs gratis. OJO: Cambiar el 'Gratis' por el valor correspondiente para la tienda seleccionada
 
                     if result_pay or result_free:       # Si consigue alguno de las dos variables en el HTML finaliza el while
                         break
@@ -64,9 +65,10 @@ def web_scrapper(apps_dict):
 
 if __name__ == "__main__":
     print("Inicia proceso de Scrapper de la AppStore")
-    # Define el diccionario que tiene como key: 'Nombre de la APP' y como value: 'URL de la AppStore'. Ejemplo: 'GoCoEdit - Code & Text Editor': 'https://apps.apple.com/es/app/gocoedit-code-text-editor/id869346854?mt=8&ign-mpt=uo%3D4'
-    apps_dict = {}
-    # Ejecuta la funcion para hacer el webscrapping de la AppStore
+    """
+        Define el diccionario que tiene como key: 'Nombre de la APP' y como value: 'URL de la AppStore'. Ejemplo: 'GoCoEdit - Code & Text Editor': 'https://apps.apple.com/es/app/gocoedit-code-text-editor/id869346854?mt=8&ign-mpt=uo%3D4'
+        Ejecuta la funcion para hacer el webscrapping de la AppStore
+    """
     if apps_dict:
         web_scrapper(apps_dict)
     else:
